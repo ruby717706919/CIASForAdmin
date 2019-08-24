@@ -21,7 +21,7 @@ public class UserUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -32,13 +32,14 @@ public class UserUI {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
 	public UserUI() {
 		initialize();
+		
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class UserUI {
 		button_1.setBounds(55, 107, 93, 23);
 		panel_2.add(button_1);
 		
-		JPanel panel_3 = new JPanel();//暂定为显示员工的当日打卡情况，考虑使用第三方插件，暂不需要实现
+		JPanel panel_3 = new JPanel();//暂定为显示员工的当日打卡情况，暂不需要实现
 		panel_3.setBounds(254, 20, 331, 477);
 		frame.getContentPane().add(panel_3);
 		
@@ -122,5 +123,7 @@ public class UserUI {
 		JPanel panel_4 = new JPanel();//备用功能button区，暂时无用，无需处理
 		panel_4.setBounds(602, 204, 382, 292);
 		frame.getContentPane().add(panel_4);
+		
+		frame.setVisible(true);
 	}
 }
