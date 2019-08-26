@@ -126,7 +126,7 @@ public class TrueUI{
 	}
 	
 	private void login() {
-		if (lg.log_in(textField, passwordField,sqlCennect.getMap())) {
+		if (lg.log_in(textField, passwordField)) {
 			new UserUI();
 			frame.dispose();
 		}else {
