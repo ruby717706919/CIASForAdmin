@@ -1,6 +1,7 @@
 package util;
 
 
+import javax.swing.*;
 import java.sql.*;
 
 //该类实现与数据库连接，暂未完成
@@ -20,13 +21,42 @@ public class SqlConnect {
     		
     		conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
     		//System.out.println("实例化Statement");
-    		
+    		stmt=conn.createStatement();
     	} catch(Exception e) {
     		System.out.println("连接失败！");
     		e.printStackTrace();
     	}
     	System.out.println("SUCCESS!");
 	}
+
+	public void runSqlStmt(String sql){
+		this.sql=sql;
+		try {
+			stmt.execute(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean adminLogin(JTextField tf1, JTextField tf2) {
+	    String admin=tf1.getText();
+	    String adminPassword=tf2.getText();
+        try {
+        	sql= "select password from admin where name='"+admin+"'";
+            resultSet=stmt.executeQuery(sql);
+            while (resultSet.next()) {
+            	if (resultSet.getString("password").equals("0")||!resultSet.getString("password").equals(adminPassword))
+                    return false;
+            	else {
+					return true;
+				}
+			}
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
 	
 	public boolean createUser(String name,String password) {
 		sql="select id from emploee";

@@ -12,46 +12,50 @@ public class Users {
 		sConnect=new SqlConnect();
 		name=Name;
 		password=Password;
-		sConnect.setID();
-		sConnect.setName(Name);
-		sConnect.setPassword(Password);
+		sConnect.createUser(name,password);
+		id=sConnect.getID();
 	}
 	
 	public Users() {
 		sConnect=new SqlConnect();
-		
+		name=getName();
+		password=getPassword();
+		id=sConnect.getID();
+		comeTime=getCT();
+		leaveTime=getLT();
+		state=getState();
 	}
 	
-	public void setName(String Name) {
+	public boolean setName(String Name) {
 		name=Name;
-		sConnect.setName(Name);
+		return sConnect.setName(id,Name);
 	}
 	
-	public void setPassword(String Password) {
+	public boolean setPassword(String Password) {
 		password=Password;
-		sConnect.setPassword(Password);
+		return sConnect.setPassword(id,Password);
 	}
 	
 	public void setCT(String ct) {
 		comeTime=ct;
-		sConnect.setCT(ct);
+		sConnect.setCT(name,ct);
 	}
 	
 	public void setLT(String lt) {
 		leaveTime=lt;
-		sConnect.setLT(lt);
+		sConnect.setLT(name,lt);
 	}
 	
 	public void setState(String state) {
 		this.state=state;
-		sConnect.setState(state);
+		sConnect.setState(name,state);
 	}
 	
 	public String getName() {
-		return sConnect.getName();
+		return sConnect.getName(id);
 	}
 	public String getPassword() {
-		return sConnect.getPassword();
+		return sConnect.getPassword(id);
 	}
 	public int getID() {
 		return sConnect.getID();

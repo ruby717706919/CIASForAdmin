@@ -24,8 +24,8 @@ public class TrueUI{
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	private login lg=new login();
-	private SqlConnect sqlCennect=new SqlConnect();
+	//private login lg=new login();
+	private SqlConnect sConnect=new SqlConnect();
 
 	/**
 	 * Launch the application.
@@ -126,12 +126,12 @@ public class TrueUI{
 	}
 	
 	private void login() {
-		if (lg.log_in(textField, passwordField)) {
+		if (sConnect.adminLogin(textField, passwordField)) {
 			new UserUI();
 			frame.dispose();
 		}else {
-			loginFailUI lgfuFailUI=new loginFailUI();
-			lgfuFailUI.setLocationRelativeTo(frame);
+			FailUi fail=new FailUi("登录失败，请检查用户名与密码");
+			fail.setLocationRelativeTo(frame);
 		}
 	}
 }
