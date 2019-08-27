@@ -11,6 +11,8 @@ public class SqlConnect {
     static final String PASSWORD = "SEUshixunCIteam";
     private Connection conn = null;
 	private Statement stmt =null;
+	private String sql=null;
+	private ResultSet resultSet=null;
 	public SqlConnect() {
 		try {
     		Class.forName(JDBC_DRIVER);
@@ -26,40 +28,84 @@ public class SqlConnect {
     	System.out.println("SUCCESS!");
 	}
 	
-	public void setID() {
+	public boolean createUser(String name,String password) {
+		sql="select id from emploee";
+		int count = 0;
+		try {
+			stmt=conn.createStatement();
+			resultSet=stmt.executeQuery(sql);
+			while (resultSet.next()) {
+				count=resultSet.getInt("id");
+			}
+			count++;
+			sql="create into emploee value(count,name,password)";
+			stmt.execute(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		
+	}
+
+	
+	public boolean setName(int id,String name) {
+		sql= String.format("update employee set name=%s where id=%d", name, id);
+		try {
+			stmt.execute(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean setPassword(int id,String password) {
+		sql= String.format("update employee set password=%s where id=%d", password, id);
+		try {
+			stmt.execute(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void setCT(String name,String ct) {
 		
 	}
 	
-	public void setID(int id) {
+	public void setLT(String name,String lt) {
 		
 	}
 	
-	public void setName(String name) {
-		
-	}
-	
-	public void setPassword(String password) {
-		
-	}
-	
-	public void setCT(String ct) {
-		
-	}
-	
-	public void setLT(String lt) {
-		
-	}
-	
-	public void setState(String state) {
+	public void setState(String name,String state) {
 		
 	}
 	//以下功能均需要从数据库中读取数据返回，但未完成，先用""和0代替
-	public String getName() {
-		return "";
+	public String getName(int id) {
+		sql= String.format("select name from employee where id=%d", id);
+		String name=null;
+		try {
+			resultSet=stmt.executeQuery(sql);
+			name=resultSet.getString("name");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 	
-	public String getPassword() {
-		return "";
+	public String getPassword(int id) {
+		sql= String.format("select name from employee where id=%d", id);
+		String password=null;
+		try {
+			resultSet=stmt.executeQuery(sql);
+			password=resultSet.getString("name");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return password;
 	}
 	
 	public int getID() {
