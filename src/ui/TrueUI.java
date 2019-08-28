@@ -117,7 +117,9 @@ public class TrueUI{
 		JButton button = new JButton("登录");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				login();
+				//login();
+				new UserUI();
+				frame.dispose();
 			}
 		});
 		button.setBounds(232, 242, 93, 23);
