@@ -2,7 +2,11 @@ package util;
 
 
 import javax.swing.*;
+import java.util.*;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 //该类实现与数据库连接，暂未完成
 public class SqlConnect {
@@ -59,24 +63,57 @@ public class SqlConnect {
     }
 	
 	public boolean createUser(String name,String password) {
-		sql="select id from emploee";
+		sql="select id from employee";
 		int count = 0;
-		try {
-			stmt=conn.createStatement();
-			resultSet=stmt.executeQuery(sql);
-			while (resultSet.next()) {
-				count=resultSet.getInt("id");
+		if (!name.equals(null)&&!password.equals(null)&&!name.equals("")&&!password.equals("")) {
+			try {
+				resultSet=stmt.executeQuery(sql);
+				while (resultSet.next()) {
+					count=resultSet.getInt("id");
+				}
+				count++;
+				sql=String.format("insert into employee(id,name,password) values(%d,'%s','%s')",count,name,password);
+				stmt.execute(sql);
+				return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return false;
 			}
-			count++;
-			sql="create into emploee value(count,name,password)";
+		}else 
+			System.out.print("???");
+			return false;
+		
+	}
+	
+	
+	public boolean deleteUser(String id) {
+		if (id.equals(null)||id.equals("")) {
+			return false;
+		}
+		int ID=Integer.parseInt(id);
+		sql="delete from employee where id="+ID;
+		try {
 			stmt.execute(sql);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-
+	}
+	
+	public ArrayList<Users> getUsers(SqlConnect sqlConnect) {
+		ArrayList<Users> userslist=new ArrayList<Users>();
 		
+		try {
+		    sql="select id from employee";
+			resultSet=stmt.executeQuery(sql);
+			while (resultSet.next())
+				userslist.add(new Users(resultSet.getInt("id"),sqlConnect));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return userslist;
 	}
 
 	
@@ -102,14 +139,6 @@ public class SqlConnect {
 		}
 	}
 	
-	public void setCT(String name,String ct) {
-		
-	}
-	
-	public void setLT(String name,String lt) {
-		
-	}
-	
 	public void setState(String name,String state) {
 		
 	}
@@ -119,7 +148,9 @@ public class SqlConnect {
 		String name=null;
 		try {
 			resultSet=stmt.executeQuery(sql);
-			name=resultSet.getString("name");
+			if (resultSet.next())
+				name=resultSet.getString("name");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -127,32 +158,53 @@ public class SqlConnect {
 	}
 	
 	public String getPassword(int id) {
-		sql= String.format("select name from employee where id=%d", id);
+		sql= String.format("select password from employee where id=%d", id);
 		String password=null;
 		try {
 			resultSet=stmt.executeQuery(sql);
-			password=resultSet.getString("name");
+			if (resultSet.next())
+				password=resultSet.getString("password");
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return password;
 	}
 	
-	public int getID() {
+	public int getID(String name) {
+		sql="select id from emloyee where name='"+name+"'";
+		try {
+			resultSet=stmt.executeQuery(sql);
+			while (resultSet.next())
+				return resultSet.getInt("id");	
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
 		return 0;
 	}
-	
-	public String getCT() {
-		return "";
+
+	public String getNowState(String name){
+		int year= Calendar.getInstance().get(Calendar.YEAR);
+		int month= Calendar.getInstance().get(Calendar.MONTH)+1;
+		int date=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		String state=null;
+		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
+		sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='20190828'";
+		try {
+			resultSet=stmt.executeQuery(sql);
+			if (resultSet.next()) {
+				state=resultSet.getString(name);
+				return state.substring(8,12);
+			}else {
+				return "9999";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "9999";
 	}
 	
-	public String getLT() {
-		return "";
-	}
-	
-	public String getState() {
-		return "";
-	}
-	
-	
+
 }
