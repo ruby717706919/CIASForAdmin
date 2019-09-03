@@ -20,7 +20,7 @@ import util.checkUI;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-
+//该界面为打卡时间设置界面
 public class SetAttTimeUI extends JFrame{
 
 

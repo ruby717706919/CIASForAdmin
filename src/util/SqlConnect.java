@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static java.util.Calendar.*;
+
 //该类实现与数据库连接，暂未完成
 public class SqlConnect {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";  
@@ -125,7 +127,7 @@ public class SqlConnect {
 
 	
 	public boolean setName(int id,String name,Users user) {
-		sql= String.format("update employee set name=%s where id=%d", name, id);
+		sql= String.format("update employee set name='%s' where id=%d", name, id);
 		try {
 			stmt.execute(sql);
 			user.setName(name);
@@ -208,9 +210,9 @@ public class SqlConnect {
 	}
 
 	public String getNowState(String name){
-		int year= Calendar.getInstance().get(Calendar.YEAR);
-		int month= Calendar.getInstance().get(Calendar.MONTH)+1;
-		int date=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		int year= getInstance().get(YEAR);
+		int month= getInstance().get(MONTH)+1;
+		int date= getInstance().get(DAY_OF_MONTH);
 		String state=null;
 		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
 		sql="select * from "+year+"08"+
@@ -233,6 +235,109 @@ public class SqlConnect {
 	public String getNowState(Users user) {
 		return user.getNowState();
 	}
-	
 
+	public String getAttTime(String name){
+		int year= getInstance().get(YEAR);
+		int month= getInstance().get(MONTH)+1;
+		int date= getInstance().get(DAY_OF_MONTH);
+		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
+		sql="select * from "+year+"08"+
+				//(month<10?"0"+month:month)+
+				"attendance where Date='20190828'";
+		String state=null;
+		try {
+			resultSet=stmt.executeQuery(sql);
+			if (resultSet.next()) {
+				state=resultSet.getString(name);
+				return state.substring(0,4);
+			}else {
+				return "9999";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "9999";
+	}
+
+	//public String getAttTime(String name,String someday){}
+
+	public String getLeaveTime(String name){
+		int year= getInstance().get(YEAR);
+		int month= getInstance().get(MONTH)+1;
+		int date= getInstance().get(DAY_OF_MONTH);
+		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
+		sql="select * from "+year+"08"+
+				//(month<10?"0"+month:month)+
+				"attendance where Date='20190828'";
+		String state=null;
+		try {
+			resultSet=stmt.executeQuery(sql);
+			if (resultSet.next()) {
+				state=resultSet.getString(name);
+				return state.substring(4,8);
+			}else {
+				return "9999";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "9999";
+	}
+
+	//public String getLeaveTime(String name,String someday){ }
+	//只有当天，指定任意时间的获取未完成
+
+	public void setAttTime(String name,String attTime){
+		int year= getInstance().get(YEAR);
+		int month= getInstance().get(MONTH)+1;
+		int date= getInstance().get(DAY_OF_MONTH);
+		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
+		sql="select * from "+year+"08"+
+				//(month<10?"0"+month:month)+
+				"attendance where Date='20190828'";
+		String state=null;
+		try {
+			resultSet=stmt.executeQuery(sql);
+			if (resultSet.next()) {
+				state = resultSet.getString(name);
+				state = state.substring(4, 12);
+				state = attTime+state;
+				sql="update "+year+"08"+
+						//(month<10?"0"+month:month)+
+						"attendance set where name='"+name+"' where Date='20190828'";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setLeaveTime(String name,String leaveTime){
+		int year= getInstance().get(YEAR);
+		int month= getInstance().get(MONTH)+1;
+		int date= getInstance().get(DAY_OF_MONTH);
+		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
+		sql="select * from "+year+"08"+
+				//(month<10?"0"+month:month)+
+				"attendance where Date='20190828'";
+		String state=null;
+		try {
+			resultSet=stmt.executeQuery(sql);
+			if (resultSet.next()) {
+				state = resultSet.getString(name);
+				state = state.substring(0, 4)+leaveTime+state.substring(8,12);
+				sql="update "+year+"08"+
+						//(month<10?"0"+month:month)+
+						"attendance set where name='"+name+"' where Date='20190828'";
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}//同样只有当天
+
+	public void setAttTime(String name,String attTime,String someday){
+
+	}
+	public void getAttTime(String name,String leaveTime,String someday){
+
+	}
 }

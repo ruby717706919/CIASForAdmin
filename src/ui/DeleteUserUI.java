@@ -12,7 +12,7 @@ import util.checkUI;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
-
+//该ui为用户删除界面
 public class DeleteUserUI {
 	private JFrame frame;
 	private JTextField textField;

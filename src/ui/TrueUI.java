@@ -41,7 +41,7 @@ public class TrueUI{
 				}
 			}
 		});
-	}
+	}//唯一main函数
 
 	/**
 	 * Create the application.

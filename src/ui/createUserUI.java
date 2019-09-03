@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-
+//该ui为用户创建界面
 public class createUserUI {
 
 	/**

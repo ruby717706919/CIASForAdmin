@@ -23,14 +23,14 @@ import java.awt.GridLayout;
 public class UserUI {
 
 	private JFrame frame;
-	private TimeSynchro timeSynchro=new TimeSynchro();
+	private TimeSynchro timeSynchro=new TimeSynchro();//时间同步
 	private SqlConnect sqlConnect=null;
-	private ArrayList<JLabel>userStateList=new ArrayList<JLabel>();
-	private ArrayList<Users>users=new ArrayList<>();
+	private ArrayList<JLabel>userStateList=new ArrayList<JLabel>();//员工状态的图形化
+	private ArrayList<Users>users=new ArrayList<>();//员工链表
 	//private ArrayList<SqlConnect>sqlList=new ArrayList<SqlConnect>();
 	
 	private String attTime;
-	private String leaveTime;
+	private String leaveTime;//打卡时间
 
 	/**
 	 * Launch the application.
@@ -52,14 +52,14 @@ public class UserUI {
 	 * Create the application.
 	 */
 	public UserUI() {
-		sqlConnect=new SqlConnect();
+		sqlConnect=new SqlConnect();//进行sql连接
 		/*for (int i = 0; i < 20; i++) {
 			sqlList.add(new SqlConnect());
 		}*/
-		users=sqlConnect.getUsers();
+		users=sqlConnect.getUsers();//获取员工数据
 		attTime="0900";
-		leaveTime="1700";
-		initialize();
+		leaveTime="1700";//默认上下班时间
+		initialize();//ui实现
 	}
 	private void setUserStateList(JPanel p) {
 		for (int i = 0; i < 20; i++) {
@@ -71,7 +71,7 @@ public class UserUI {
 			userStateList.get(i).setVerticalAlignment(SwingConstants.CENTER);
 			p.add(userStateList.get(i));
 		}
-	}
+	}//员工状态图形化
 	
 	private void refreshUserStateList() {
 		for (int i=0;i<users.size();i++) {
@@ -108,7 +108,7 @@ public class UserUI {
 
 		}
 		
-	}
+	}//显示并刷新员工状态
 	
 	private void setAtdRate(JLabel lbl) {
 		int atd=0;
@@ -117,18 +117,18 @@ public class UserUI {
 				atd++;
 			}
 		lbl.setText("当前出勤："+atd+"/"+users.size());
-	}
+	}//显示出勤人数比
 
 	
 	public void setAtt(String attTime,String leaveTime) {
 		this.attTime=attTime;
 		this.leaveTime=leaveTime;
-	}
+	}//设置打卡时间
 	
 	private void newSATU() {
 		SetAttTimeUI satu=new SetAttTimeUI(this);
 		satu.setLocationRelativeTo(frame);
-	}
+	}//打卡时间设置界面打开
 	
 	
 	/**
@@ -143,7 +143,7 @@ public class UserUI {
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
-		frame.setTitle("什么都队考勤系统");
+		frame.setTitle("什么都队考勤系统");//主界面信息设置
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 21, 209, 188);
@@ -170,7 +170,7 @@ public class UserUI {
 		lblWeekday.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblWeekday);
 		
-		timeSynchro.timeSync(lblDate, lblTime, lblWeekday);
+		timeSynchro.timeSync(lblDate, lblTime, lblWeekday);//以上label与该函数共同实现时间同步刷新
 		
 		JLabel label_3 = new JLabel("当前出勤：");
 		label_3.setBounds(0, 0, 0, 0);
@@ -179,13 +179,13 @@ public class UserUI {
 		JLabel lblNewLabel_1 = new JLabel("atdRate");
 		lblNewLabel_1.setBounds(30, 136, 140, 15);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel_1);
+		panel.add(lblNewLabel_1);//出勤人数比显示
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(Color.CYAN);
 		panel_3.setBounds(229, 21, 529, 464);
 		frame.getContentPane().add(panel_3);
-		panel_3.setLayout(new GridLayout(5, 4, 50, 50));
+		panel_3.setLayout(new GridLayout(5, 4, 50, 50));//员工状态显示区域
 		
 		JButton btnNewButton_1 = new JButton("考勤总体日报");
 		btnNewButton_1.setBounds(778, 21, 183, 66);
@@ -221,7 +221,7 @@ public class UserUI {
 		button_1.setBounds(111, 108, 93, 23);
 		panel_2.add(button_1);
 		
-		JButton button_2 = new JButton("添加员工");
+		JButton button_2 = new JButton("添加员工");//添加员工界面
 		button_2.setBounds(111, 39, 93, 23);
 		panel_2.add(button_2);
 		
@@ -234,7 +234,7 @@ public class UserUI {
 			}
 		});
 		
-		JButton button_3 = new JButton("删除员工");
+		JButton button_3 = new JButton("删除员工");//删除员工界面
 		button_3.setBounds(111, 75, 93, 23);
 		panel_2.add(button_3);
 		button_3.addActionListener(new ActionListener() {
@@ -269,7 +269,7 @@ public class UserUI {
 				
 			}
 		};
-		timer.schedule(timerTask,0,10000);
+		timer.schedule(timerTask,0,10000);//每10秒一次刷新员工状态
 		frame.setVisible(true);
 	}
 }
