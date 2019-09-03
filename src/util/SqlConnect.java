@@ -18,6 +18,8 @@ public class SqlConnect {
 	private Statement stmt =null;
 	private String sql=null;
 	private ResultSet resultSet=null;
+	
+	private ArrayList<SqlConnect>sqllist=new ArrayList<SqlConnect>();
 	public SqlConnect() {
 		try {
     		Class.forName(JDBC_DRIVER);
@@ -30,7 +32,7 @@ public class SqlConnect {
     		System.out.println("连接失败！");
     		e.printStackTrace();
     	}
-    	System.out.println("SUCCESS!");
+    	//System.out.println("SUCCESS!");
 	}
 
 	public void runSqlStmt(String sql){
@@ -101,15 +103,20 @@ public class SqlConnect {
 		}
 	}
 	
-	public ArrayList<Users> getUsers(SqlConnect sqlConnect) {
+	public ArrayList<Users> getUsers() {
 		ArrayList<Users> userslist=new ArrayList<Users>();
 		
 		try {
 		    sql="select id from employee";
 			resultSet=stmt.executeQuery(sql);
-			while (resultSet.next())
-				userslist.add(new Users(resultSet.getInt("id"),sqlConnect));
-		} catch (SQLException e) {
+			int i=0;
+			while (resultSet.next()) {
+				//userslist.add(new Users(resultSet.getInt("id"),sqlConnect));
+				sqllist.add(new SqlConnect());
+			    userslist.add(new Users(resultSet.getInt("id"),sqllist.get(i)));
+			    i++;
+			    } 
+		}catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -117,21 +124,24 @@ public class SqlConnect {
 	}
 
 	
-	public boolean setName(int id,String name) {
+	public boolean setName(int id,String name,Users user) {
 		sql= String.format("update employee set name=%s where id=%d", name, id);
 		try {
 			stmt.execute(sql);
-			return true;
+			user.setName(name);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
+		return false;
 	}
 	
-	public boolean setPassword(int id,String password) {
+	
+	public boolean setPassword(int id,String password,Users user) {
 		sql= String.format("update employee set password=%s where id=%d", password, id);
 		try {
 			stmt.execute(sql);
+			user.setPassword(password);
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -157,6 +167,10 @@ public class SqlConnect {
 		return name;
 	}
 	
+	public String getName(Users user) {
+		return user.getName();
+	}
+	
 	public String getPassword(int id) {
 		sql= String.format("select password from employee where id=%d", id);
 		String password=null;
@@ -169,6 +183,10 @@ public class SqlConnect {
 			e.printStackTrace();
 		}
 		return password;
+	}
+	
+	public String getaPassword(Users user) {
+		return user.getPassword();
 	}
 	
 	public int getID(String name) {
@@ -184,6 +202,10 @@ public class SqlConnect {
 		}
 		return 0;
 	}
+	
+	public int getID(Users user) {
+		return user.getID();
+	}
 
 	public String getNowState(String name){
 		int year= Calendar.getInstance().get(Calendar.YEAR);
@@ -191,7 +213,9 @@ public class SqlConnect {
 		int date=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		String state=null;
 		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
-		sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='20190828'";
+		sql="select * from "+year+"08"+
+				//(month<10?"0"+month:month)+
+				"attendance where Date='20190828'";
 		try {
 			resultSet=stmt.executeQuery(sql);
 			if (resultSet.next()) {
@@ -204,6 +228,10 @@ public class SqlConnect {
 			e.printStackTrace();
 		}
 		return "9999";
+	}
+	
+	public String getNowState(Users user) {
+		return user.getNowState();
 	}
 	
 

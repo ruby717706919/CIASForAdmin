@@ -4,70 +4,49 @@ public class Users {
 	private String name;
 	private String password;
 	private int id;
-	private String comeTime;
-	private String leaveTime;
-	private String state;
-	SqlConnect sConnect=null;
-	public Users(String Name,String Password) {
-		sConnect=new SqlConnect();
+	//private SqlConnect sConnect=null;
+	private String nowState;
+	public Users(String Name,String Password,SqlConnect sConnect) {
+		//sConnect=new SqlConnect();
 		name=Name;
 		password=Password;
 		sConnect.createUser(name,password);
-		id=sConnect.getID();
+		id=sConnect.getID(name);
+		
+		
 	}
 	
-	public Users() {
-		sConnect=new SqlConnect();
-		name=getName();
-		password=getPassword();
-		id=sConnect.getID();
-		comeTime=getCT();
-		leaveTime=getLT();
-		state=getState();
+	public Users(int ID,SqlConnect sConnect) {
+		//sConnect=new SqlConnect();
+		id=ID;
+		name=sConnect.getName(id);
+		password=sConnect.getPassword(ID);
+		nowState=sConnect.getNowState(name);
 	}
 	
-	public boolean setName(String Name) {
+	public void setName(String Name) {
 		name=Name;
-		return sConnect.setName(id,Name);
+
 	}
 	
-	public boolean setPassword(String Password) {
+	public void setPassword(String Password) {
 		password=Password;
-		return sConnect.setPassword(id,Password);
 	}
 	
-	public void setCT(String ct) {
-		comeTime=ct;
-		sConnect.setCT(name,ct);
-	}
-	
-	public void setLT(String lt) {
-		leaveTime=lt;
-		sConnect.setLT(name,lt);
-	}
-	
-	public void setState(String state) {
-		this.state=state;
-		sConnect.setState(name,state);
-	}
+
 	
 	public String getName() {
-		return sConnect.getName(id);
+		return name;
 	}
 	public String getPassword() {
-		return sConnect.getPassword(id);
+		return password;
 	}
 	public int getID() {
-		return sConnect.getID();
+		return id;
 	}
-	public String getCT() {
-		return sConnect.getCT();
-	}
-	public String getLT() {
-		return sConnect.getLT();
-	}
-	public String getState() {
-		return sConnect.getState();
-	}
+
+	public String getNowState(){
+	    return nowState;
+    }
 
 }

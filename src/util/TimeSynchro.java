@@ -6,26 +6,26 @@ import javax.swing.*;
 
 public class TimeSynchro {
 	
-	public void setDate(JTextArea ta) {
+	public void setDate(JLabel l) {
 		Calendar cal=Calendar.getInstance();
 		int year=cal.get(Calendar.YEAR);
         int month=cal.get(Calendar.MONTH);
         month+=1;
         int day=cal.get(Calendar.DATE);
         String Date = year + "年" + (month<10?"0"+month:month) + "月" + (day<10?"0"+day:day) + "日";
-        ta.setText(Date);
+        l.setText(Date);
 	}
 	
-	public void setTime(JTextArea ta) {
+	public void setTime(JLabel l) {
 		Calendar cal=Calendar.getInstance();
         int hour=cal.get(Calendar.HOUR_OF_DAY);
         int minute=cal.get(Calendar.MINUTE);
         int second=cal.get(Calendar.SECOND);
         String Time=(hour<10?"0"+hour:hour)+":"+(minute<10?"0"+minute:minute)+":"+(second<10?"0"+second:second);
-        ta.setText(Time);
+        l.setText(Time);
 	}
 	
-	public void setDayOfWeek(JTextArea ta) {
+	public void setDayOfWeek(JLabel l) {
 		Calendar cal=Calendar.getInstance();
 		int DOW=cal.get(Calendar.DAY_OF_WEEK);
 		String dayOfWeek = null;
@@ -54,18 +54,18 @@ public class TimeSynchro {
 
 		default:
 		}
-		ta.setText(dayOfWeek);
+		l.setText(dayOfWeek);
 	}
 	
-	public void timeSync(JTextArea ta1,JTextArea ta2,JTextArea ta3) {
+	public void timeSync(JLabel l1,JLabel l2,JLabel l3) {
 		Timer timer=new Timer();
 		TimerTask timeSyncTask=new TimerTask() {
 			
 			@Override
 			public void run() {
-				setDate(ta1);
-				setTime(ta2);
-				setDayOfWeek(ta3);
+				setDate(l1);
+				setTime(l2);
+				setDayOfWeek(l3);
 				
 			}
 		};

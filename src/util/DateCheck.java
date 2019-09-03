@@ -13,8 +13,10 @@ public class DateCheck {
     private int NowTime=0;
     private int Yesterday=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     private int Today=0;
-    public DateCheck(){
+    private ArrayList<Users> uList=new ArrayList<Users>();
+    public DateCheck(ArrayList<SqlConnect> sqllist){
         sConnect=new SqlConnect();
+        uList=sConnect.getUsers();
     }
 
     public void Check(){
@@ -47,14 +49,11 @@ public class DateCheck {
 		};
 		timer1.schedule(timerTask1,0,10000);
 		timer2.schedule(timertask2,0,86400000);
-        Date date=new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String nowDate = sdf.format(date);
 
     }
     
     public void setNewState() {
-		ArrayList<Users> uList=sConnect.getUsers();
+		
 		Date date=new Date();
 		String sql="insert into employee values("+date+",";
 		for (int i = 0; i < uList.size(); i++) {
@@ -67,7 +66,7 @@ public class DateCheck {
     public void createNewTable() {
 		String sql="create table "+Calendar.getInstance().get(Calendar.YEAR)+
 				(Calendar.getInstance().get(Calendar.MONTH)+1)+"(Date date";
-		ArrayList<Users> uList=sConnect.getUsers();
+		uList=sConnect.getUsers();
 		for (int i = 0; i < uList.size(); i++) {
 			sql=sql+","+uList.get(i).getName()+" varchar(12)";
 		}

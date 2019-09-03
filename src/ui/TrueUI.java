@@ -3,12 +3,10 @@ package ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.FlowLayout;
 import javax.swing.JTextField;
 
 import util.*;
 
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -96,6 +94,8 @@ public class TrueUI{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
+		frame.setTitle("考勤系统登录界面");
 		
 		textField = new JTextField();
 		textField.setBounds(201, 129, 177, 21);
@@ -117,9 +117,9 @@ public class TrueUI{
 		JButton button = new JButton("登录");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//login();
-				new UserUI();
-				frame.dispose();
+				login();
+				/*new UserUI();
+				frame.dispose();*/
 			}
 		});
 		button.setBounds(232, 242, 93, 23);
@@ -132,8 +132,8 @@ public class TrueUI{
 			new UserUI();
 			frame.dispose();
 		}else {
-			FailUi fail=new FailUi("登录失败，请检查用户名与密码");
-			fail.setLocationRelativeTo(frame);
+			checkUI ui1=new checkUI("登录失败，请检查用户名与密码");
+			ui1.setLocationRelativeTo(frame);
 		}
 	}
 }
