@@ -4,7 +4,7 @@ public class Users {
 	private String name;
 	private String password;
 	private int id;
-	private SqlConnect sConnect=null;
+	private SqlConnect sConnect;
 	private String nowState;
 
 	private String mAttTime;
@@ -69,6 +69,14 @@ public class Users {
 
 	public void setmLeaveTime(String leaveTime){
 		sConnect.setLeaveTime(leaveTime,name);
+	}
+
+	public String getSomedayAttTime(String someday){
+		return sConnect.getAttTime(name,someday);
+	}
+
+	public String getSomedayLeaveTime(String someday){
+		return sConnect.getAttTime(name,someday);
 	}
 
 }
