@@ -213,11 +213,12 @@ public class SqlConnect {
 		int year= getInstance().get(YEAR);
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
+		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
 		String state=null;
-		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
-		sql="select * from "+year+"08"+
-				//(month<10?"0"+month:month)+
-				"attendance where Date='20190828'";
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		/*sql="select * from "+year+"08"+
+				(month<10?"0"+month:month)+
+				"attendance where Date='20190828'";*/
 		try {
 			resultSet=stmt.executeQuery(sql);
 			if (resultSet.next()) {
@@ -240,10 +241,11 @@ public class SqlConnect {
 		int year= getInstance().get(YEAR);
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
-		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
-		sql="select * from "+year+"08"+
+		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
-				"attendance where Date='20190828'";
+				"attendance where Date='20190828'";*/
 		String state=null;
 		try {
 			resultSet=stmt.executeQuery(sql);
@@ -280,10 +282,11 @@ public class SqlConnect {
 		int year= getInstance().get(YEAR);
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
-		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
-		sql="select * from "+year+"08"+
+		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
-				"attendance where Date='20190828'";
+				"attendance where Date='20190828'";*/
 		String state=null;
 		try {
 			resultSet=stmt.executeQuery(sql);
@@ -321,10 +324,11 @@ public class SqlConnect {
 		int year= getInstance().get(YEAR);
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
-		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
-		sql="select * from "+year+"08"+
+		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
-				"attendance where Date='20190828'";
+				"attendance where Date='20190828'";*/
 		String state=null;
 		try {
 			resultSet=stmt.executeQuery(sql);
@@ -345,10 +349,11 @@ public class SqlConnect {
 		int year= getInstance().get(YEAR);
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
-		//sql="select * from "+year+(month<10?"0"+month:month)+"attendance where Date='"+dayString+"'";
-		sql="select * from "+year+"08"+
+		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
-				"attendance where Date='20190828'";
+				"attendance where Date='20190828'";*/
 		String state=null;
 		try {
 			resultSet=stmt.executeQuery(sql);

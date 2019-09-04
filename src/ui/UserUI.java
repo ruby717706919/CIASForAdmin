@@ -135,6 +135,9 @@ public class UserUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		DateCheck dc=new DateCheck();
+		dc.Check();
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(135, 206, 250));
 		frame.getContentPane().setForeground(Color.WHITE);
