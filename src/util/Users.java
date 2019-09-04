@@ -1,5 +1,10 @@
 package util;
 
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
+import static java.util.Calendar.getInstance;
+
 public class Users {
 	private String name;
 	private String password;
@@ -21,6 +26,10 @@ public class Users {
 	}
 	
 	public Users(int ID,SqlConnect sConnect) {
+		int year= getInstance().get(YEAR);
+		int month= getInstance().get(MONTH)+1;
+		int date= getInstance().get(DAY_OF_MONTH);
+		today=String.valueOf(year)+(month<10?"0"+month:month)+(date<10?"0"+date:date);
 		this.sConnect=sConnect;
 		id=ID;
 		name=this.sConnect.getName(id);

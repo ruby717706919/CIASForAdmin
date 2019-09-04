@@ -182,7 +182,7 @@ public class UserUI {
 		panel.add(lblNewLabel_1);//出勤人数比显示
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(Color.CYAN);
+		panel_3.setBackground(new Color(173, 255, 47));
 		panel_3.setBounds(229, 21, 529, 464);
 		frame.getContentPane().add(panel_3);
 		panel_3.setLayout(new GridLayout(5, 4, 50, 50));//员工状态显示区域

@@ -166,6 +166,7 @@ public class SetAttTimeUI extends JFrame{
 			}
 		});
 		setVisible(true);
+		setResizable(false);
 	}
 	
 }
