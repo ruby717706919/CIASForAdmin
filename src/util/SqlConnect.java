@@ -255,11 +255,26 @@ public class SqlConnect {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return "9999";
 		}
-		return "9999";
 	}
 
-	//public String getAttTime(String name,String someday){}
+	public String getAttTime(String name,String someday){
+	    sql=String.format("select '%s' from %s where date='%s'",name,someday.substring(0,6),someday);
+	    String state=null;
+        try {
+            if (resultSet.next()){
+                resultSet=stmt.executeQuery(sql);
+                state=resultSet.getString(name);
+                return state.substring(0,4);
+            }else
+                return  "9999";
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "9999";
+        }
+    }
 
 	public String getLeaveTime(String name){
 		int year= getInstance().get(YEAR);
@@ -284,7 +299,22 @@ public class SqlConnect {
 		return "9999";
 	}
 
-	//public String getLeaveTime(String name,String someday){ }
+	public String getLeaveTime(String name,String someday){
+        sql=String.format("select '%s' from %s where date='%s'",name,someday.substring(0,6),someday);
+        String state=null;
+        try {
+            if (resultSet.next()){
+                resultSet=stmt.executeQuery(sql);
+                state=resultSet.getString(name);
+                return state.substring(4,8);
+            }else
+                return  "9999";
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "9999";
+        }
+    }
 	//只有当天，指定任意时间的获取未完成
 
 	public void setAttTime(String name,String attTime){
@@ -337,7 +367,7 @@ public class SqlConnect {
 	public void setAttTime(String name,String attTime,String someday){
 
 	}
-	public void getAttTime(String name,String leaveTime,String someday){
+	public void setLeaveTime(String name,String leaveTime,String someday){
 
 	}
 }
