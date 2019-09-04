@@ -62,6 +62,7 @@ public class SetAttTimeUI extends JFrame{
 	private void setCheckUi(String str) {
 		checkUI cUi=new checkUI(str);
 		cUi.setLocationRelativeTo(this);
+		cUi.setResizable(false);
 	}
 
 	/**
@@ -156,7 +157,12 @@ public class SetAttTimeUI extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ui.setAtt(hour1+minute1,hour2+minute2);
+				try {
+					ui.setAtt(hour1+minute1,hour2+minute2);
+					setCheckUi("设置成功！");
+				} catch (Exception e2) {
+					setCheckUi("设置失败！");
+				}
 			}
 		});
 		setVisible(true);
