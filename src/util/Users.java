@@ -21,10 +21,8 @@ public class Users {
 		password=Password;
 		this.sConnect.createUser(name,password);
 		id=sConnect.getID(name);
-		
-		
 	}
-	
+
 	public Users(int ID,SqlConnect sConnect) {
 		int year= getInstance().get(YEAR);
 		int month= getInstance().get(MONTH)+1;
@@ -38,33 +36,31 @@ public class Users {
 		mAttTime=this.sConnect.getAttTime(name);
 		mLeaveTime=this.sConnect.getLeaveTime(name);
 	}
-	
+
 	public void setName(String Name) {
 		name=Name;
-
 	}
-	
+
 	public void setPassword(String Password) {
 		password=Password;
 	}
-	
 
-	
 	public String getName() {
 		return name;
 	}
 	public String getPassword() {
 		return password;
 	}
+
 	public int getID() {
 		return id;
 	}
 
 	public String getNowState(){
-	    return nowState;
-    }
+		return nowState;
+	}
 
-    public String getmAttTime(){
+	public String getmAttTime(){
 		return mAttTime;
 	}
 
@@ -88,4 +84,19 @@ public class Users {
 		return sConnect.getAttTime(name,someday);
 	}
 
+	public String getDate() {
+		int[] arr = new int[today.length()];
+		for (int i = 0; i < today.length(); i++) {
+			arr[i] = Integer.parseInt(today.substring(i, i + 1));//substring是找出包含起始位置，不包含结束位置，到结束位置的前一位的子串
+		}
+		return String.valueOf(arr[6])+String.valueOf(arr[7]);
+	}
+
+	public String getMonth(){
+		int[] arr = new int[today.length()];
+		for (int i = 0; i < today.length(); i++) {
+			arr[i] = Integer.parseInt(today.substring(i, i + 1));//substring是找出包含起始位置，不包含结束位置，到结束位置的前一位的子串
+		}
+		return String.valueOf(arr[4])+String.valueOf(arr[5]);
+	}
 }
