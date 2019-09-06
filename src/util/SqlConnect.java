@@ -45,6 +45,16 @@ public class SqlConnect {
 			e.printStackTrace();
 		}
 	}
+
+	public ResultSet getSqlRunningRes(String sql){
+	    this.sql=sql;
+	    try {
+	        return stmt.executeQuery(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 	
 	public boolean adminLogin(JTextField tf1, JTextField tf2) {
 	    String admin=tf1.getText();
@@ -118,10 +128,12 @@ public class SqlConnect {
 			    userslist.add(new Users(resultSet.getInt("id"),sqllist.get(i)));
 			    i++;
 			    } 
+			resultSet=null;
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
+		
 		return userslist;
 	}
 
@@ -215,7 +227,7 @@ public class SqlConnect {
 		int date= getInstance().get(DAY_OF_MONTH);
 		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
 		String state=null;
-		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+date+"'";
 		/*sql="select * from "+year+"08"+
 				(month<10?"0"+month:month)+
 				"attendance where Date='20190828'";*/
@@ -242,7 +254,7 @@ public class SqlConnect {
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
 		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
-		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+date+"'";
 		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
 				"attendance where Date='20190828'";*/
@@ -283,7 +295,7 @@ public class SqlConnect {
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
 		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
-		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+date+"'";
 		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
 				"attendance where Date='20190828'";*/
@@ -325,7 +337,7 @@ public class SqlConnect {
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
 		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
-		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+date+"'";
 		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
 				"attendance where Date='20190828'";*/
@@ -350,7 +362,7 @@ public class SqlConnect {
 		int month= getInstance().get(MONTH)+1;
 		int date= getInstance().get(DAY_OF_MONTH);
 		String monthOfYear=String.valueOf(year)+(month<10?"0"+month:month);
-		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+"'";
+		sql="select * from "+monthOfYear+"attendance where Date='"+monthOfYear+date+"'";
 		/*sql="select * from "+year+"08"+
 				//(month<10?"0"+month:month)+
 				"attendance where Date='20190828'";*/

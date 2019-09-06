@@ -11,8 +11,6 @@ import static java.util.Calendar.*;
 
 public class DateCheck {
     private SqlConnect sConnect=null;
-    private int LastTime=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-    private int NowTime=0;
     private int Yesterday=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     private int Today=0;
     private ArrayList<Users> uList=new ArrayList<Users>();
@@ -22,7 +20,6 @@ public class DateCheck {
     }
 
     public void Check(){
-        NowTime=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         Today=Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         //Timer timer1=new Timer();
         Timer timer2=new Timer();

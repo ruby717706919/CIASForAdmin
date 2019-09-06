@@ -2,22 +2,16 @@ package ui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Color;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.awt.event.ActionEvent;
 
 import util.*;
 import java.awt.GridLayout;
-
+import java.util.Timer;
 
 
 public class UserUI {
@@ -25,12 +19,19 @@ public class UserUI {
 	private JFrame frame;
 	private TimeSynchro timeSynchro=new TimeSynchro();//时间同步
 	private SqlConnect sqlConnect=null;
-	private ArrayList<JLabel>userStateList=new ArrayList<JLabel>();//员工状态的图形化
-	private ArrayList<Users>users=new ArrayList<>();//员工链表
+	//private ArrayList<JLabel>userStateList=new ArrayList<JLabel>();//员工状态的图形化
+	private ArrayList<Users>users;//员工链表
 	//private ArrayList<SqlConnect>sqlList=new ArrayList<SqlConnect>();
 	
 	private String attTime;
 	private String leaveTime;//打卡时间
+
+	private JTable table;
+	private String [][]tableData;
+	private final static String[]columnNames=new String[] {"ID","姓名","考勤状态","上班时间","下班时间"};
+	private JScrollPane panel_3;
+	private SimpleDateFormat sdf;
+	private Map<String,String>mapState=new HashMap<>();
 
 	/**
 	 * Launch the application.
@@ -59,56 +60,55 @@ public class UserUI {
 		users=sqlConnect.getUsers();//获取员工数据
 		attTime="0900";
 		leaveTime="1700";//默认上下班时间
+		sdf=new SimpleDateFormat("yyyyMMdd");
+		setStateMap();
 		initialize();//ui实现
 	}
-	private void setUserStateList(JPanel p) {
-		for (int i = 0; i < 20; i++) {
-			userStateList.add(new JLabel());
-			userStateList.get(i).setVisible(false);
-			userStateList.get(i).setVisible(false);
-			userStateList.get(i).setOpaque(true);
-			userStateList.get(i).setHorizontalAlignment(SwingConstants.CENTER);
-			userStateList.get(i).setVerticalAlignment(SwingConstants.CENTER);
-			p.add(userStateList.get(i));
+
+	private void setStateMap(){
+		/*mapColor.put("0000",new Color(18, 253, 27));
+		mapColor.put("1000",new Color(129, 137, 253));
+		mapColor.put("0100",new Color(93, 255, 248));
+		mapColor.put("0010",new Color(254, 61, 66));
+		mapColor.put("0001",new Color(249, 246, 89));*/
+		mapState.put("0000","<html><font color='green'>正常出勤</font></html>");
+		mapState.put("1000","<html><font color='blue'>请假</font></html>");
+		mapState.put("0100","<html><font color='cyan'>出差</font></html>");
+		mapState.put("0010","<html><font color='red'>旷工</font></html>");
+		mapState.put("0001","<html><font color='yellow'>迟到/早退</font></html>");
+	}
+
+	private void setTableData(){
+		panel_3=new JScrollPane();
+		//JPanel panel_3 = new JPanel();
+		panel_3.setBackground(new Color(192, 195, 255));
+		panel_3.setBounds(229, 21, 529, 464);
+		frame.getContentPane().add(panel_3);
+		tableData=new String[users.size()][5];
+		for (int i=0;i<users.size();i++){
+			tableData[i][0]=String.valueOf(i+1);
+			tableData[i][1]=users.get(i).getName();
+			if (mapState.containsKey(users.get(i).getNowState()))
+				tableData[i][2]=mapState.get(users.get(i).getNowState());
+			else tableData[i][2]="<html><font color='black'>状态不明</font></html>";
+			tableData[i][3]=users.get(i).getmAttTime();
+			tableData[i][4]=users.get(i).getmLeaveTime();
 		}
+		table=new JTable(tableData,columnNames);
+		table.setBackground(Color.WHITE);
+		panel_3.setViewportView(table);
+		table.setVisible(true);
+		panel_3.setVisible(true);
+
+	}
+	private void reset() {
+		frame.remove(panel_3);
+		users=new ArrayList<>();
+		users=sqlConnect.getUsers();
+		setTableData();
 	}//员工状态图形化
 	
-	private void refreshUserStateList() {
-		for (int i=0;i<users.size();i++) {
-			//System.out.println("????");
-			userStateList.get(i).setText(String.format("%d%s", users.get(i).getID(), users.get(i).getName()));
-			//panel_3.add(PanelList.get(i));
-			switch (users.get(i).getNowState()){
-				case "0000"://正常出勤
-					//PanelList.get(i).setBackground(new Color(18, 253, 27));
-					userStateList.get(i).setBackground(new Color(18, 253, 27));
-					break;
-				case "1000"://请假
-					//PanelList.get(i).setBackground(new Color(9, 253, 250));
-					userStateList.get(i).setBackground(new Color(9, 253, 250));
-					break;
-				case "0100"://出差
-					//PanelList.get(i).setBackground(new Color(25, 53, 253));
-					userStateList.get(i).setBackground(new Color(25, 53, 253));
-					break;
-				case "0010"://旷工
-					//PanelList.get(i).setBackground(new Color(253, 30, 33));
-					userStateList.get(i).setBackground(new Color(253, 30, 33));
-					break;
-				case "0001"://迟到或早退
-					//PanelList.get(i).setBackground(new Color(253, 237, 33));
-					userStateList.get(i).setBackground(new Color(253, 237, 33));
-					break;
-				default:
-					//PanelList.get(i).setBackground(new Color(255, 255, 255));
-					userStateList.get(i).setBackground(new Color(255, 255, 255));
-					break;
-			}
-			userStateList.get(i).setVisible(true);
 
-		}
-		
-	}//显示并刷新员工状态
 	
 	private void setAtdRate(JLabel lbl) {
 		int atd=0;
@@ -183,49 +183,51 @@ public class UserUI {
 		lblNewLabel_1.setBounds(30, 136, 140, 15);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel_1);//出勤人数比显示
-		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(173, 255, 47));
-		panel_3.setBounds(229, 21, 529, 464);
-		frame.getContentPane().add(panel_3);
-		panel_3.setLayout(new GridLayout(5, 4, 50, 50));//员工状态显示区域
+
+		setTableData();
 		
 		JButton btnNewButton_1 = new JButton("考勤总体日报");
 		btnNewButton_1.setBounds(778, 21, 183, 66);
 		frame.getContentPane().add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DayUI dayUI=new DayUI(sqlConnect);
+				dayUI.setLocation(frame);
+			}
+		});
 		
-		JButton btnNewButton_2 = new JButton("考勤总体周报");
-		btnNewButton_2.setBounds(778, 109, 183, 72);
+		JButton btnNewButton_2 = new JButton("<html>"+"考勤总"+"<br>"+"体月报"+"</html>");
+		btnNewButton_2.setBounds(778, 109, 98, 82);
 		frame.getContentPane().add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 224, 209, 261);
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
-		JButton btnNewButton = new JButton("打卡设定");//该button实现修改打卡规则等的功能
+		JButton btnNewButton = new JButton("<html>"+"打卡"+"<br>"+"设定"+"</html>");//该button实现修改打卡规则等的功能
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				newSATU();
 			}
 		});
-		btnNewButton.setBounds(10, 39, 93, 23);
+		btnNewButton.setBounds(10, 24, 81, 93);
 		panel_2.add(btnNewButton);
 		
-		JButton button = new JButton("请假审批");//该button实现关于员工请假的审批功能
-		button.setBounds(10, 74, 93, 24);
+		JButton button = new JButton("<html>"+"请假"+"<br>"+"审批"+"</html>");//该button实现关于员工请假的审批功能
+		button.setBounds(10, 138, 81, 93);
 		panel_2.add(button);
 		
-		JButton button_1 = new JButton("更多设置");//该button点击后会出现新界面，有更多功能button
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		button_1.setBounds(111, 108, 93, 23);
-		panel_2.add(button_1);
-		
-		JButton button_2 = new JButton("添加员工");//添加员工界面
-		button_2.setBounds(111, 39, 93, 23);
+		JButton button_2 = new JButton("<html>"+"添加"+"<br>"+"员工"+"</html>");//添加员工界面
+		button_2.setBounds(111, 24, 88, 93);
 		panel_2.add(button_2);
 		
 		button_2.addActionListener(new ActionListener() {
@@ -237,8 +239,8 @@ public class UserUI {
 			}
 		});
 		
-		JButton button_3 = new JButton("删除员工");//删除员工界面
-		button_3.setBounds(111, 75, 93, 23);
+		JButton button_3 = new JButton("<html>"+"删除"+"<br>"+"员工"+"</html>");//删除员工界面
+		button_3.setBounds(111, 138, 88, 93);
 		panel_2.add(button_3);
 		button_3.addActionListener(new ActionListener() {
 			
@@ -258,16 +260,13 @@ public class UserUI {
 		lblNewLabel.setForeground(Color.WHITE);
 		frame.getContentPane().add(lblNewLabel);
 		
-	
-		//ArrayList<JPanel>PanelList=new ArrayList<JPanel>();
-		setUserStateList(panel_3);
+
 		Timer timer=new Timer();
 		TimerTask timerTask=new TimerTask() {
 			
 			@Override
 			public void run() {
-				users=sqlConnect.getUsers();
-				refreshUserStateList();
+				reset();
 				setAtdRate(lblNewLabel_1);
 				
 			}

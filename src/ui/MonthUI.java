@@ -21,7 +21,7 @@ public class MonthUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -32,12 +32,12 @@ public class MonthUI extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
-	public MonthUI() {
+	public MonthUI(int month) {
 
 		super("monthUI");
 		sqlConnect = new SqlConnect();
@@ -53,6 +53,7 @@ public class MonthUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		//8月表格填充
 		fillInTable(8);
+		//fillInTable(month);
 		setVisible(true);
 	}
 
