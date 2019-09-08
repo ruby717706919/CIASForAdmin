@@ -21,7 +21,7 @@ public class Users {
 		password=Password;
 		this.sConnect.createUser(name,password);
 		id=sConnect.getID(name);
-	}
+	}//创建新用户用构造函数
 
 	public Users(int ID,SqlConnect sConnect) {
 		int year= getInstance().get(YEAR);
@@ -35,8 +35,8 @@ public class Users {
 		nowState=this.sConnect.getNowState(name);
 		mAttTime=this.sConnect.getAttTime(name);
 		mLeaveTime=this.sConnect.getLeaveTime(name);
-	}
-
+	}//获取用户数据用构造函数
+//以下为常规获取类内数据用函数/方法
 	public void setName(String Name) {
 		name=Name;
 	}

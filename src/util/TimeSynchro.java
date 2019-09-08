@@ -13,7 +13,7 @@ public class TimeSynchro {
         month+=1;
         int day=cal.get(Calendar.DATE);
         String Date = year + "年" + (month<10?"0"+month:month) + "月" + (day<10?"0"+day:day) + "日";
-        l.setText(Date);
+        l.setText(Date);//设置日期
 	}
 	
 	public void setTime(JLabel l) {
@@ -22,7 +22,7 @@ public class TimeSynchro {
         int minute=cal.get(Calendar.MINUTE);
         int second=cal.get(Calendar.SECOND);
         String Time=(hour<10?"0"+hour:hour)+":"+(minute<10?"0"+minute:minute)+":"+(second<10?"0"+second:second);
-        l.setText(Time);
+        l.setText(Time);//设置时间
 	}
 	
 	public void setDayOfWeek(JLabel l) {
@@ -54,7 +54,7 @@ public class TimeSynchro {
 
 		default:
 		}
-		l.setText(dayOfWeek);
+		l.setText(dayOfWeek);//设置星期
 	}
 	
 	public void timeSync(JLabel l1,JLabel l2,JLabel l3) {
@@ -69,7 +69,7 @@ public class TimeSynchro {
 				
 			}
 		};
-		timer.schedule(timeSyncTask, 0, 1000);
+		timer.schedule(timeSyncTask, 0, 1000);//每秒同步更新时间
 	}
 	
 	

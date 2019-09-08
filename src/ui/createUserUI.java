@@ -25,7 +25,7 @@ public class createUserUI {
 	private SqlConnect sqlConnect=null;
 	private JTextField textField;
 	private JLabel label_1;
-	private JPasswordField passwordField;
+	private JPasswordField passwordField;//界面组件
 
 
 
@@ -46,12 +46,12 @@ public class createUserUI {
 		frame.setTitle("添加员工");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setLayout(null);//主frame
 		
 		textField = new JTextField();
 		textField.setBounds(145, 86, 184, 21);
 		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textField.setColumns(10);//输入用户姓名
 		
 		JLabel label = new JLabel("姓名");
 		label.setBounds(87, 89, 40, 15);
@@ -66,12 +66,12 @@ public class createUserUI {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(145, 138, 184, 21);
 		passwordField.setColumns(16);
-		frame.getContentPane().add(passwordField);
+		frame.getContentPane().add(passwordField);//输入账户密码
 		
 		JButton button = new JButton("添加");
 		button.setBounds(160, 190, 93, 23);
 		frame.getContentPane().add(button);
-		button.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {//button实现新用户创建/添加
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -90,5 +90,5 @@ public class createUserUI {
 	}
 	public void setlocation(JFrame fr) {
 		frame.setLocationRelativeTo(fr);
-	}
+	}//居中设定
 }

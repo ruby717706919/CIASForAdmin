@@ -10,7 +10,7 @@ import java.util.Date;
 
 import static java.util.Calendar.*;
 
-//该类实现与数据库连接，暂未完成
+//该类实现与数据库连接以及多数需要用到数据库的方法
 public class SqlConnect {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";  
     static final String DB_URL = "jdbc:mysql://citeam.chinaeast.cloudapp.chinacloudapi.cn:3306/userdata?useSSL=false&serverTimezone=UTC";
@@ -37,7 +37,7 @@ public class SqlConnect {
     	//System.out.println("SUCCESS!");
 	}
 
-	public void runSqlStmt(String sql){
+	public void runSqlStmt(String sql){//实现sql语句的外部使用方法
 		this.sql=sql;
 		try {
 			stmt.execute(sql);
@@ -46,7 +46,7 @@ public class SqlConnect {
 		}
 	}
 
-	public ResultSet getSqlRunningRes(String sql){
+	public ResultSet getSqlRunningRes(String sql){//获取sql语句结果的外部方法
 	    this.sql=sql;
 	    try {
 	        return stmt.executeQuery(sql);
@@ -56,7 +56,7 @@ public class SqlConnect {
         }
     }
 	
-	public boolean adminLogin(JTextField tf1, JTextField tf2) {
+	public boolean adminLogin(JTextField tf1, JTextField tf2) {//用于管理员登录的外部方法
 	    String admin=tf1.getText();
 	    String adminPassword=tf2.getText();
         try {
@@ -76,7 +76,7 @@ public class SqlConnect {
         return false;
     }
 	
-	public boolean createUser(String name,String password) {
+	public boolean createUser(String name,String password) {//用于创建用户的外部方法
 		sql="select id from employee";
 		int count = 0;
 		if (!name.equals(null)&&!password.equals(null)&&!name.equals("")&&!password.equals("")) {
@@ -100,7 +100,7 @@ public class SqlConnect {
 	}
 	
 	
-	public boolean deleteUser(String id) {
+	public boolean deleteUser(String id) {//用于删除员工数据的外部类方法
 		if (id.equals(null)||id.equals("")) {
 			return false;
 		}
@@ -115,7 +115,7 @@ public class SqlConnect {
 		}
 	}
 	
-	public ArrayList<Users> getUsers() {
+	public ArrayList<Users> getUsers() {//用于获取员工数据的外部方法，返回值为存放users类的ArrayList
 		ArrayList<Users> userslist=new ArrayList<Users>();
 		
 		try {
@@ -138,7 +138,7 @@ public class SqlConnect {
 	}
 
 	
-	public boolean setName(int id,String name,Users user) {
+	public boolean setName(int id,String name,Users user) {//设置用户姓名
 		sql= String.format("update employee set name='%s' where id=%d", name, id);
 		try {
 			stmt.execute(sql);
@@ -151,7 +151,7 @@ public class SqlConnect {
 	}
 	
 	
-	public boolean setPassword(int id,String password,Users user) {
+	public boolean setPassword(int id,String password,Users user) {//设置用户密码
 		sql= String.format("update employee set password=%s where id=%d", password, id);
 		try {
 			stmt.execute(sql);
@@ -166,7 +166,7 @@ public class SqlConnect {
 	public void setState(String name,String state) {
 		
 	}
-	//以下功能均需要从数据库中读取数据返回，但未完成，先用""和0代替
+	//以下功能读取数据库并返回，并重载同名方法，从users类直接读取
 	public String getName(int id) {
 		sql= String.format("select name from employee where id=%d", id);
 		String name=null;
@@ -199,7 +199,7 @@ public class SqlConnect {
 		return password;
 	}
 	
-	public String getaPassword(Users user) {
+	public String getPassword(Users user) {
 		return user.getPassword();
 	}
 	
@@ -271,7 +271,7 @@ public class SqlConnect {
 			e.printStackTrace();
 			return "9999";
 		}
-	}
+	}//当天获取，下方重载了获取任意一天的方法
 
 	public String getAttTime(String name,String someday){
 	    sql=String.format("select '%s' from %s where date='%s'",name,someday.substring(0,6),someday);
@@ -312,7 +312,7 @@ public class SqlConnect {
 			e.printStackTrace();
 		}
 		return "9999";
-	}
+	}//当天获取，下方重载了获取任意一天的方法
 
 	public String getLeaveTime(String name,String someday){
         sql=String.format("select '%s' from %s where date='%s'",name,someday.substring(0,6),someday);
@@ -330,7 +330,6 @@ public class SqlConnect {
             return "9999";
         }
     }
-	//只有当天，指定任意时间的获取未完成
 
 	public void setAttTime(String name,String attTime){
 		int year= getInstance().get(YEAR);

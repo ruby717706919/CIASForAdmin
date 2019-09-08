@@ -16,7 +16,7 @@ import javax.swing.JButton;
 public class DeleteUserUI {
 	private JFrame frame;
 	private JTextField textField;
-	private SqlConnect sConnect=null;
+	private SqlConnect sConnect=null;//必要组件
 
 
 	/**
@@ -41,14 +41,14 @@ public class DeleteUserUI {
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("数据删除");
 		frame.setVisible(true);
-		frame.setResizable(false);
+		frame.setResizable(false);//主frame
 		
 		;
 		
 		textField = new JTextField();
 		textField.setBounds(167, 123, 66, 21);
 		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textField.setColumns(10);//输入要删除员工的id
 		
 		JLabel lblNewLabel = new JLabel("请输入要删除数据的员工ID");
 		lblNewLabel.setBounds(107, 70, 206, 21);
@@ -58,7 +58,7 @@ public class DeleteUserUI {
 		JButton button = new JButton("删除");
 		button.setBounds(167, 170, 66, 21);
 		frame.getContentPane().add(button);
-		button.addActionListener(new ActionListener() {
+		button.addActionListener(new ActionListener() {//实现删除
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

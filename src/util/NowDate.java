@@ -1,7 +1,7 @@
 package util;
 
 import java.util.Calendar;
-
+//获取日期用工具
 public class NowDate {
 	public String  getNowDate() {
 		Calendar calendar=Calendar.getInstance();

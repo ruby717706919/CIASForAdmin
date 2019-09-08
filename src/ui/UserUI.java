@@ -76,7 +76,7 @@ public class UserUI {
 		mapState.put("0100","<html><font color='cyan'>出差</font></html>");
 		mapState.put("0010","<html><font color='red'>旷工</font></html>");
 		mapState.put("0001","<html><font color='yellow'>迟到/早退</font></html>");
-	}
+	}//设置员工状态显示的字体颜色
 
 	private void setTableData(){
 		panel_3=new JScrollPane();
@@ -99,14 +99,14 @@ public class UserUI {
 		panel_3.setViewportView(table);
 		table.setVisible(true);
 		panel_3.setVisible(true);
+	}//设定table数据
 
-	}
 	private void reset() {
 		frame.remove(panel_3);
 		users=new ArrayList<>();
 		users=sqlConnect.getUsers();
 		setTableData();
-	}//员工状态图形化
+	}//刷新table数据
 	
 
 	
@@ -189,24 +189,17 @@ public class UserUI {
 		JButton btnNewButton_1 = new JButton("考勤总体日报");
 		btnNewButton_1.setBounds(778, 21, 183, 66);
 		frame.getContentPane().add(btnNewButton_1);
-		btnNewButton_1.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DayUI dayUI=new DayUI(sqlConnect);
-				dayUI.setLocation(frame);
-			}
+		btnNewButton_1.addActionListener(e -> {
+			DayUI dayUI=new DayUI(sqlConnect);
+			dayUI.setLocation(frame);
 		});
 		
-		JButton btnNewButton_2 = new JButton("<html>"+"考勤总"+"<br>"+"体月报"+"</html>");
+		JButton btnNewButton_2 = new JButton("<html>"+"考勤总"+"<br>"+"体月报"+"</html>");//该button实现显示考勤月报功能
 		btnNewButton_2.setBounds(778, 109, 98, 82);
 		frame.getContentPane().add(btnNewButton_2);
-		btnNewButton_2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-            }
-        });
+		btnNewButton_2.addActionListener(e -> {
+			MonthUI mUi=new MonthUI(8);
+		});
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 224, 209, 261);
@@ -214,15 +207,11 @@ public class UserUI {
 		panel_2.setLayout(null);
 		
 		JButton btnNewButton = new JButton("<html>"+"打卡"+"<br>"+"设定"+"</html>");//该button实现修改打卡规则等的功能
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				newSATU();
-			}
-		});
+		btnNewButton.addActionListener(e -> newSATU());
 		btnNewButton.setBounds(10, 24, 81, 93);
 		panel_2.add(btnNewButton);
 		
-		JButton button = new JButton("<html>"+"请假"+"<br>"+"审批"+"</html>");//该button实现关于员工请假的审批功能
+		JButton button = new JButton("<html>"+"请假"+"<br>"+"审批"+"</html>");//该button实现关于员工请假的审批功能，目前未实现
 		button.setBounds(10, 138, 81, 93);
 		panel_2.add(button);
 		
@@ -230,28 +219,20 @@ public class UserUI {
 		button_2.setBounds(111, 24, 88, 93);
 		panel_2.add(button_2);
 		
-		button_2.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				createUserUI ui=new createUserUI();
-				ui.setlocation(frame);
-			}
+		button_2.addActionListener(e -> {
+			createUserUI ui=new createUserUI();
+			ui.setlocation(frame);
 		});
 		
 		JButton button_3 = new JButton("<html>"+"删除"+"<br>"+"员工"+"</html>");//删除员工界面
 		button_3.setBounds(111, 138, 88, 93);
 		panel_2.add(button_3);
-		button_3.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DeleteUserUI ui=new DeleteUserUI();
-				ui.setlocation(frame);
-			}
+		button_3.addActionListener(e -> {
+			DeleteUserUI ui=new DeleteUserUI();
+			ui.setlocation(frame);
 		});
 		
-		JPanel panel_4 = new JPanel();
+		JPanel panel_4 = new JPanel();//不知道现在有啥用，可能剔除
 		panel_4.setBounds(778, 201, 183, 284);
 		frame.getContentPane().add(panel_4);
 		

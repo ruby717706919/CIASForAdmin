@@ -43,12 +43,10 @@ public class SetAttTimeUI extends JFrame{
 		for (int i = 0; i < 12; i++) {
 			check=(i*5<10?"0"+i*5:String.valueOf(i*5));
 			minuteList[i]=check;
-		}
+		}//以上设定下拉列表待选项
 	}
 
-	/**
-	 * Launch the application.
-	 */
+
 	
 	/**
 	 * Create the application.
@@ -56,7 +54,7 @@ public class SetAttTimeUI extends JFrame{
 	public SetAttTimeUI(UserUI ui) {
 		setTitle("打卡设置");
 		setStr();
-		initialize(ui);
+		initialize(ui);//父ui用于对本窗口的定位
 	}
 	
 	private void setCheckUi(String str) {
@@ -70,7 +68,7 @@ public class SetAttTimeUI extends JFrame{
 	 */
 	private void initialize(UserUI ui) {
 		setBounds(100, 100, 450, 300);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//仅关闭本窗口
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -88,7 +86,7 @@ public class SetAttTimeUI extends JFrame{
 		panel.add(lblNewLabel_1);
 		
 		
-		JComboBox<String> comboBox = new JComboBox<>(hourList);
+		JComboBox<String> comboBox = new JComboBox<>(hourList);//下拉框1号设定
 		//JComboBox comboBox=new JComboBox();
 		comboBox.setBounds(97, 10, 51, 24);
 		panel.add(comboBox);
@@ -100,17 +98,12 @@ public class SetAttTimeUI extends JFrame{
 			}
 		});
 		
-		JComboBox<String> comboBox_1 = new JComboBox<>(minuteList);
+		JComboBox<String> comboBox_1 = new JComboBox<>(minuteList);//下拉框2号设定，与1号共同获取atttime
 		//JComboBox comboBox_1=new JComboBox();
 		comboBox_1.setBounds(185, 10, 51, 24);
 		panel.add(comboBox_1);
 		comboBox_1.setSelectedIndex(7);
-		comboBox_1.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				minute1= (String) comboBox_1.getSelectedItem();
-			}
-		});
+		comboBox_1.addItemListener(e -> minute1= (String) comboBox_1.getSelectedItem());
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(Color.GREEN);
@@ -126,45 +119,31 @@ public class SetAttTimeUI extends JFrame{
 		lblNewLabel_3.setBounds(158, 12, 17, 20);
 		panel_1.add(lblNewLabel_3);
 		
-		JComboBox<String> comboBox_2 = new JComboBox<String>(hourList);
+		JComboBox<String> comboBox_2 = new JComboBox<String>(hourList);//下拉框3号
 		//JComboBox comboBox_2=new JComboBox();
 		comboBox_2.setBounds(98, 10, 50, 24);
 		panel_1.add(comboBox_2);
 		comboBox_2.setSelectedIndex(18);
-		comboBox_2.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				hour2= (String) comboBox_2.getSelectedItem();
-			}
-		});
+		comboBox_2.addItemListener(e -> hour2= (String) comboBox_2.getSelectedItem());
 		
-		JComboBox<String> comboBox_3 = new JComboBox<String>(minuteList);
+		JComboBox<String> comboBox_3 = new JComboBox<String>(minuteList);//下拉框4号，与3号共同获取leavetime
 		//JComboBox comboBox_3=new JComboBox();
 		comboBox_3.setBounds(185, 10, 50, 24);
 		panel_1.add(comboBox_3);
 		comboBox_3.setSelectedIndex(0);
-		comboBox_3.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				minute2= (String) comboBox_3.getSelectedItem();
-			}
-		});
+		comboBox_3.addItemListener(e -> minute2= (String) comboBox_3.getSelectedItem());
 		
-		JButton button = new JButton("确定");
+		JButton button = new JButton("确定");//设置上下班时间
 		button.setBounds(160, 202, 93, 23);
 		getContentPane().add(button);
-		button.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					ui.setAtt(hour1+minute1,hour2+minute2);
-					setCheckUi("设置成功！");
-				} catch (Exception e2) {
-					setCheckUi("设置失败！");
-				}
-			}
-		});
+		button.addActionListener(e -> {
+            try {
+                ui.setAtt(hour1+minute1,hour2+minute2);
+                setCheckUi("设置成功！");
+            } catch (Exception e2) {
+                setCheckUi("设置失败！");
+            }
+        });
 		setVisible(true);
 		setResizable(false);
 	}

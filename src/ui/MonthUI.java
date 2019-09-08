@@ -39,7 +39,7 @@ public class MonthUI extends JFrame {
 	 */
 	public MonthUI(int month) {
 
-		super("monthUI");
+		super("考勤月报");
 		sqlConnect = new SqlConnect();
 		String[][] datas ={};
 		String[] titles = {"姓名","班次","01","02","03","04","05","06","07","08","09","10","11","12","13"
@@ -50,7 +50,7 @@ public class MonthUI extends JFrame {
 		add(new JScrollPane(table));
 		setSize(1400,800);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		//8月表格填充
 		fillInTable(8);
 		//fillInTable(month);

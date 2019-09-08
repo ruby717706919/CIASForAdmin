@@ -13,12 +13,10 @@ public class checkUI extends JFrame {
 
 
 
-	/**
-	 * Create the application.
-	 */
+
 	public checkUI(String text) {
 		initialize(text);
-	}
+	}//设置该窗口文本
 
 	/**
 	 * Initialize the contents of the frame.
@@ -44,7 +42,7 @@ public class checkUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-			}
+			}//关闭窗口
 		});
 	}
 
